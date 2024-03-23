@@ -1,13 +1,21 @@
 ---
 /* eslint max-lines: 'off' */
 
-import { fetchData } from '../lib/data.js';
-import NavPagination from '../components/NavPagination.astro';
 
-const products = await fetchData('products');
+import NavPagination from '../components/NavPagination.astro';
+import { API_URL, REMOTE_ASSETS_BASE_URL } from '../app/constants.js';
+const fetchClients = async () => {
+	const res = await fetch(`${API_URL}/clients`);
+	if (!res.ok) {
+		throw new Error('Error al cargar los clientes');
+	}
+	return res.json();
+};
+
+const { clients, error } = await fetchClients();
+
 ---
 
-<entities-crud type="products">
 	<div
 		class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700"
 	>
@@ -253,7 +261,7 @@ const products = await fetchData('products');
 							class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
 						>
 							{
-								products.map((product) => (
+								clients.map((product) => (
 									<tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
 										<td class="w-4 p-4">
 											<div class="flex items-center">
@@ -717,8 +725,4 @@ const products = await fetchData('products');
 	</div>
 
 	<NavPagination />
-</entities-crud>
 
-<script>
-	import './CrudEntities.client.js';
-</script>

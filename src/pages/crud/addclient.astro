@@ -1,0 +1,27 @@
+---
+---
+	<!-- Definición del formulario en HTML -->
+	<form class="form" id="myForm">
+		<input type="text" name="name" placeholder="Nombre" required />
+		<input type="tel" name="tel" placeholder="Teléfono" />
+		<input type="email" name="email" placeholder="Email" required />
+		<label>
+			Status:
+			<input type="checkbox" name="status" value="true" />
+		</label>
+		<button type="submit">Insertar Cliente</button>
+	</form>
+
+<script type="module">
+
+	import { handleFormSubmit } from '/src/utils/clientFormHandler.js'
+
+	const form = document.getElementById('myForm');
+	form.addEventListener('submit', handleFormSubmit);
+</script>
+
+<!-- Agregar aquí tu CSS de Tailwind -->
+<style>
+	.form { /* tu clase de Tailwind para formularios */
+	}
+</style>

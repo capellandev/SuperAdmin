@@ -1,40 +1,8 @@
 ---
-import LayoutWithAuth from '../app/LayoutWithAuth.astro';
+import LayoutSidebar from '../app/LayoutSidebar.astro';
 import LandingReadme from '../modules/LandingReadme.astro';
-// import { supabase } from "../lib/supabase";
-//
-// const { cookies, redirect } = Astro;
-//
-// const accessToken = cookies.get("sb-access-token");
-// const refreshToken = cookies.get("sb-refresh-token");
-//
-// if (!accessToken || !refreshToken) {
-// 	return redirect("/sign-in");
-// }
-//
-// const { data, error } = await supabase.auth.setSession({
-// 	refresh_token: refreshToken.value,
-// 	access_token: accessToken.value,
-// });
-//
-// if (error) {
-// 	cookies.delete("sb-access-token", {
-// 		path: "/",
-// 	});
-// 	cookies.delete("sb-refresh-token", {
-// 		path: "/",
-// 	});
-//
-// 	return redirect("/sign-in");
-// }
-//
-// const email = data?.user?.email;
 ---
 
-<LayoutWithAuth>
-	<form action="/api/auth/signout">
-		<button type="submit">Cerrar sesión</button>
-	</form>
+<LayoutSidebar>
 	<LandingReadme />
-</LayoutWithAuth>
-
+</LayoutSidebar>

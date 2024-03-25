@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 import micromatch from "micromatch";
 
 // Rutas que no quieres proteger
-const unprotectedRoutes = ["/sign-in(|/)", "/api/**"];
+const unprotectedRoutes = ["/login(|/)", "/api/**"];
 
 export const onRequest = defineMiddleware(async ({ locals, url, cookies, redirect }, next) => {
 	// Verifica si la ruta actual debe estar desprotegida
@@ -16,7 +16,7 @@ export const onRequest = defineMiddleware(async ({ locals, url, cookies, redirec
 	const refreshToken = cookies.get("sb-refresh-token");
 
 	if (!accessToken || !refreshToken) {
-		return redirect("/sign-in");
+		return redirect("/login");
 	}
 
 	const { data, error } = await supabase.auth.setSession({
@@ -31,7 +31,7 @@ export const onRequest = defineMiddleware(async ({ locals, url, cookies, redirec
 		cookies.delete("sb-refresh-token", {
 			path: "/",
 		});
-		return redirect("/sign-in");
+		return redirect("/login");
 	}
 
 	locals.email = data.user?.email!;

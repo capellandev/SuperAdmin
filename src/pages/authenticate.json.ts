@@ -10,7 +10,7 @@ export const get: APIRoute = async ({ cookies }) => {
 		return new Response(null, {
 			status: 401,
 			headers: {
-				'Location': '/sign-in',
+				'Location': '/login',
 			},
 		});
 	}

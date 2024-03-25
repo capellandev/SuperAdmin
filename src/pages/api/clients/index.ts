@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../../../lib/supabase";
 
 export const GET: APIRoute = async () => {
 	const { data: clients, error } = await supabase
@@ -26,11 +26,11 @@ export const GET: APIRoute = async () => {
 export const POST: APIRoute = async ({ request }) => {
 	// Asumiendo que el cuerpo de la solicitud se envía como JSON
 	const body = await request.json(); // Analizar el cuerpo de la solicitud como JSON
-	const { name, tel, email, status } = body;
+	const { name, tel, email, status, notes, profile } = body;
 
 	const { data, error } = await supabase
 		.from('clients')
-		.insert([{ name, tel, email, status }])
+		.insert([{ name, tel, email, status, notes, profile }])
 		.select('*');
 
 	if (error) {

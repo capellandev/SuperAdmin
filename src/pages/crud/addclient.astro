@@ -1,27 +1,50 @@
 ---
+// Asegúrate de que este script se ejecute en el cliente.
+// No necesitas importar el cliente de Supabase aquí, ya que la lógica se manejará en el servidor a través de tu endpoint API.
 ---
-	<!-- Definición del formulario en HTML -->
-	<form class="form" id="myForm">
-		<input type="text" name="name" placeholder="Nombre" required />
-		<input type="tel" name="tel" placeholder="Teléfono" />
-		<input type="email" name="email" placeholder="Email" required />
-		<label>
-			Status:
-			<input type="checkbox" name="status" value="true" />
-		</label>
-		<button type="submit">Insertar Cliente</button>
-	</form>
+<form id="create-client-form">
+	<label for="nombre">Nombre:</label>
+	<input type="text" id="nombre" name="name" required />
+
+	<label for="email">Email:</label>
+	<input type="email" id="email" name="email" required />
+
+	<label for="telefono">Teléfono:</label>
+	<input type="text" id="telefono" name="tel" />
+	<label for="telefono">Estasdo:</label>
+	<input type="text" id="st" name="status" />
+
+	<!-- Agrega más campos según sea necesario -->
+
+	<button type="submit">Crear Cliente</button>
+</form>
 
 <script type="module">
+	const form = document.getElementById('create-client-form');
+	form.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		const formData = new FormData(form);
+		const formObject = Object.fromEntries(formData);
 
-	import { handleFormSubmit } from '/src/utils/clientFormHandler.js'
+		try {
+			const response = await fetch('/api/clients', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formObject),
+			});
 
-	const form = document.getElementById('myForm');
-	form.addEventListener('submit', handleFormSubmit);
+			if (!response.ok) {
+				throw new Error('Hubo un error al crear el cliente');
+			}
+
+			// Procesamiento después de la creación exitosa
+			alert('Cliente creado con éxito');
+			// Opcional: redirigir al usuario o limpiar el formulario
+			form.reset();
+		} catch (error) {
+			alert(error.message);
+		}
+	});
 </script>
-
-<!-- Agregar aquí tu CSS de Tailwind -->
-<style>
-	.form { /* tu clase de Tailwind para formularios */
-	}
-</style>
